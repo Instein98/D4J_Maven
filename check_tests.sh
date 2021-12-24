@@ -23,13 +23,21 @@ for proj in `ls Projects`; do
         if [ ! -f TestLists/$proj/$idx/d4jTestList ]; then
             # collect d4j test list
             echo Collecting defects4j test list for $proj-$idx...
-            defects4j checkout -p $proj -v "$idx"b -w $proj-$idx > /dev/null 2>&1
-            cd $proj-$idx && defects4j test > d4j-test.log
-            sed -n -i 's/  - \(.*\)::\(.*\)/\1#\2/p' d4j-test.log
-            cd $pwd && cat $proj-$idx/all_tests | sed -n 's/\(.*\)(\(.*\))/\2#\1 PASS/p' | sort > TestLists/$proj/$idx/d4jTestList
-            for line in `cat $proj-$idx/d4j-test.log`; do
-                sed -i "s/$line PASS/$line FAIL/" TestLists/$proj/$idx/d4jTestList
+            if [ ! -d D4J_Proj/$proj/$idx ]; then
+                mkdir -p D4J_Proj/$proj
+                defects4j checkout -p $proj -v "$idx"b -w D4J_Proj/$proj/$idx > /dev/null 2>&1
+                cd D4J_Proj/$proj/$idx && defects4j test > d4j-test.log
+                sed -n -i 's/  - \(.*\)::\(.*\)/\1#\2/p' d4j-test.log
+            else 
+                cd D4J_Proj/$proj/$idx
+            fi
+            # Note that there can be duplicated lines in all_tests file (e.g., Chart-12)!
+            # use uniq after sort !!
+            cat all_tests |  sed -n 's/\(.*\)(\(.*\))/\2#\1 PASS/p' | sort | uniq > d4jTestList
+            for line in `cat d4j-test.log`; do
+                sed -i "s/$line PASS/$line FAIL/" d4jTestList
             done
+            cd $pwd && cp D4J_Proj/$proj/$idx/d4jTestList TestLists/$proj/$idx/d4jTestList
             check_has_fail TestLists/$proj/$idx/d4jTestList
         else 
             echo Defects4J test list for $proj-$idx alreadly exists!
@@ -40,18 +48,18 @@ for proj in `ls Projects`; do
         if [ ! -f TestLists/$proj/$idx/mvnTestList ]; then
             # collect mvn test list
             echo Collecting maven test list...
-            cd Projects/$proj/$idx && mvn clean test -l mvn-test.log
-            find -name "TEST-*.xml" -exec grep testcase {} + | sed -n "s/.*testcase name=\"\(.*\)\" classname=\"\(.*\)\" time=\"\(.*\)\".*/\2#\1 PASS/p" | sort > $pwd/TestLists/$proj/$idx/mvnTestList
+            cd Projects/$proj/$idx && mvn -Dhttps.protocols=TLSv1.2 clean test -l mvn-test.log
+            find -name "TEST-*.xml" -exec grep testcase {} + | sed -n "s/.*testcase name=\"\(.*\)\" classname=\"\(.*\)\" time=\"\(.*\)\".*/\2#\1 PASS/p" | sort | uniq > mvnTestList
             # different version of surefire may have different format
-            if [ ! -s TestLists/$proj/$idx/mvnTestList ]; then
-                find -name "TEST-*.xml" -exec grep testcase {} + | sed -n "s/.*testcase classname=\"\(.*\)\" name=\"\(.*\)\" time=\"\(.*\)\".*/\2#\1 PASS/p" | sort > $pwd/TestLists/$proj/$idx/mvnTestList
+            if [ ! -s mvnTestList ]; then
+                find -name "TEST-*.xml" -exec grep testcase {} + | sed -n "s/.*testcase classname=\"\(.*\)\" name=\"\(.*\)\" time=\"\(.*\)\".*/\2#\1 PASS/p" | sort | uniq > mvnTestList
             fi
             cat mvn-test.log | sed -n 's/\(.*\)(\(.*\))  Time elapsed: .* sec  <<< FAILURE!/\2#\1/p' > mvnFailedTests
             for line in `cat mvnFailedTests`; do
-                sed -i "s/$line PASS/$line FAIL/" $pwd/TestLists/$proj/$idx/mvnTestList
+                sed -i "s/$line PASS/$line FAIL/" mvnTestList
             done
-            check_has_fail $pwd/TestLists/$proj/$idx/mvnTestList
-            cd $pwd
+            cd $pwd && cp Projects/$proj/$idx/mvnTestList TestLists/$proj/$idx/mvnTestList
+            check_has_fail TestLists/$proj/$idx/mvnTestList
         else
             echo Maven test list for $proj-$idx alreadly exists!
         fi
@@ -59,8 +67,7 @@ for proj in `ls Projects`; do
 
 
         # clean up
-        rm -rf $proj-$idx  # remove d4j subject
-        rm Projects/$proj/$idx/mvn-test.log Projects/$proj/$idx/mvnFailedTests 
+        #rm Projects/$proj/$idx/mvn-test.log Projects/$proj/$idx/mvnFailedTests 
 
         echo
 
