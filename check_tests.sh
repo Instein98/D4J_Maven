@@ -1,15 +1,36 @@
 cp -r Repository/* ~/.m2/repository/
 pwd=`pwd`
 
+parse_mvn_test_list(){
+    find -name "TEST-*.xml" -exec grep testcase {} + | sed -n "s/.*testcase name=\"\(.*\)\" classname=\"\(.*\)\" time=\"\(.*\)\".*/\2#\1 PASS/p" | sort | uniq > mvnTestList
+    # different version of surefire may have different format
+    if [ ! -s mvnTestList ]; then
+        find -name "TEST-*.xml" -exec grep testcase {} + | sed -n "s/.*testcase classname=\"\(.*\)\" name=\"\(.*\)\" time=\"\(.*\)\".*/\1#\2 PASS/p" | sort | uniq > mvnTestList
+    fi
+    if [ ! -s mvnTestList ]; then
+        find -name "TEST-*.xml" -exec grep testcase {} + | sed -n "s/.*testcase time=\".*\" classname=\"\(.*\)\" name=\"\(.*\)\".*/\1#\2 PASS/p" | sort | uniq > mvnTestList
+    fi
+}
+
+file_contains_string(){
+    file=$1
+    str=$2
+    if grep -q $str $file; then
+        true
+    else 
+        false
+    fi
+}
+
 function check_has_fail(){
     if ! grep -q FAIL $1; then
-        >&2 echo Error: No failed test in $1!!!
+        echo Error: No failed test in $1!!!
     fi
 }
 
 function check_empty_and_delete(){
     if [ ! -s $1 ]; then
-        >&2 echo Error: $1 is empty!!!
+        echo Error: $1 is empty!!!
         rm $1
     fi
 }
@@ -25,7 +46,7 @@ for proj in `ls Projects`; do
             echo Collecting defects4j test list for $proj-$idx...
             if [ ! -d D4J_Proj/$proj/$idx ]; then
                 mkdir -p D4J_Proj/$proj
-                defects4j checkout -p $proj -v "$idx"b -w D4J_Proj/$proj/$idx > /dev/null 2>&1
+                defects4j checkout -p $proj -v "$idx"b -w D4J_Proj/$proj/$idx  2>&1
                 cd D4J_Proj/$proj/$idx && defects4j test > d4j-test.log
                 sed -n -i 's/  - \(.*\)::\(.*\)/\1#\2/p' d4j-test.log
             else 
@@ -48,13 +69,16 @@ for proj in `ls Projects`; do
         if [ ! -f TestLists/$proj/$idx/mvnTestList ]; then
             # collect mvn test list
             echo Collecting maven test list...
-            cd Projects/$proj/$idx && mvn -Dhttps.protocols=TLSv1.2 clean test -l mvn-test.log
-            find -name "TEST-*.xml" -exec grep testcase {} + | sed -n "s/.*testcase name=\"\(.*\)\" classname=\"\(.*\)\" time=\"\(.*\)\".*/\2#\1 PASS/p" | sort | uniq > mvnTestList
-            # different version of surefire may have different format
-            if [ ! -s mvnTestList ]; then
-                find -name "TEST-*.xml" -exec grep testcase {} + | sed -n "s/.*testcase classname=\"\(.*\)\" name=\"\(.*\)\" time=\"\(.*\)\".*/\2#\1 PASS/p" | sort | uniq > mvnTestList
+            cd Projects/$proj/$idx  
+            if [ ! -f mvn-test.log ] ||  file_contains_string mvn-test.log "java.lang.OutOfMemoryError:"; then
+                mvn -Dhttps.protocols=TLSv1.2 -DargLine="-Xmx4096m"  clean test -l mvn-test.log
             fi
-            cat mvn-test.log | sed -n 's/\(.*\)(\(.*\))  Time elapsed: .* sec  <<< FAILURE!/\2#\1/p' > mvnFailedTests
+            parse_mvn_test_list
+            cat mvn-test.log | sed -n 's/\(.*\)(\(.*\))  Time elapsed: .* sec  <<< \(FAILURE\|ERROR\)!/\2#\1/p' > mvnFailedTests
+            if [ ! -s mvnFailedTests ];then
+               sed -n 's/  \(.*\)(\(.*\))/\2#\1/p' mvn-test.log > mvnFailedTests
+            fi
+            # Todo: add match for Mockito-38 mvn-test.log, it seems to use a different maven version 
             for line in `cat mvnFailedTests`; do
                 sed -i "s/$line PASS/$line FAIL/" mvnTestList
             done
