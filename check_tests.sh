@@ -1,3 +1,22 @@
+java8_home="/usr/lib/jvm/java-8-openjdk-amd64/jre"
+java7_home="/usr/local/java/jdk1.7.0_80/"
+
+if [ $# -eq 1 ] && [ $1 -eq 8 ];then
+    mod=8
+    mvnTestLog="mvnTestLog8"
+    mvnTestList="mvnTestList8"
+    mvnFailedTests="mvnFailedTests8"
+    mvnInitErrorTests="mvnInitErrorTests8"
+    echo **** Running in Java8 mod ****
+else
+    mod=7
+    mvnTestLog="mvnTestLog7"
+    mvnTestList="mvnTestList7"
+    mvnFailedTests="mvnFailedTests7"
+    mvnInitErrorTests="mvnInitErrorTests7"
+    echo **** Running in Java7 mod ****
+fi
+
 cp -r Repository/* ~/.m2/repository/
 pwd=`pwd`
 
@@ -23,41 +42,41 @@ file_contains_string(){
 }
 
 parse_mvn_test_list(){
-    find -name "TEST-*.xml" -exec grep testcase {} + | sed -n "s/.*testcase name=\"\(.*\)\" classname=\"\(.*\)\" time=\"\(.*\)\".*/\2#\1 PASS/p" | sort | uniq > mvnTestList
+    find -name "TEST-*.xml" -exec grep testcase {} + | sed -n "s/.*testcase name=\"\(.*\)\" classname=\"\(.*\)\" time=\"\(.*\)\".*/\2#\1 PASS/p" | sort | uniq > $mvnTestList
     # different version of surefire may have different format
-    if [ ! -s mvnTestList ]; then
-        find -name "TEST-*.xml" -exec grep testcase {} + | sed -n "s/.*testcase classname=\"\(.*\)\" name=\"\(.*\)\" time=\"\(.*\)\".*/\1#\2 PASS/p" | sort | uniq > mvnTestList
+    if [ ! -s $mvnTestList ]; then
+        find -name "TEST-*.xml" -exec grep testcase {} + | sed -n "s/.*testcase classname=\"\(.*\)\" name=\"\(.*\)\" time=\"\(.*\)\".*/\1#\2 PASS/p" | sort | uniq > $mvnTestList
     fi
-    if [ ! -s mvnTestList ]; then
-        find -name "TEST-*.xml" -exec grep testcase {} + | sed -n "s/.*testcase time=\".*\" classname=\"\(.*\)\" name=\"\(.*\)\".*/\1#\2 PASS/p" | sort | uniq > mvnTestList
+    if [ ! -s $mvnTestList ]; then
+        find -name "TEST-*.xml" -exec grep testcase {} + | sed -n "s/.*testcase time=\".*\" classname=\"\(.*\)\" name=\"\(.*\)\".*/\1#\2 PASS/p" | sort | uniq > $mvnTestList
     fi
 }
 
 parse_mvn_failed_tests(){
-    cat mvn-test.log | sed -n 's/\(.*\)(\(.*\))  Time elapsed: .* sec  <<< \(FAILURE\|ERROR\)!/\2#\1/p' > mvnFailedTests
-    if [ ! -s mvnFailedTests ];then
-         sed -n 's/  \(.*\)(\(.*\))/\2#\1/p' mvn-test.log > mvnFailedTests
+    cat $mvnTestLog | sed -n 's/\(.*\)(\(.*\))  Time elapsed: .* sec  <<< \(FAILURE\|ERROR\)!/\2#\1/p' > $mvnFailedTests
+    if [ ! -s $mvnFailedTests ];then
+         sed -n 's/  \(.*\)(\(.*\))/\2#\1/p' $mvnTestLog > $mvnFailedTests
     fi
     # match for Mockito-38, it seems to use a different maven version 
-    if [ ! -s mvnFailedTests ];then
-         sed -n 's/\[ERROR\] \(.*\)(\(.*\))  Time elapsed: .* s  <<< \(FAILURE\|ERROR\)!/\2#\1/p' mvn-test.log > mvnFailedTests
+    if [ ! -s $mvnFailedTests ];then
+         sed -n 's/\[ERROR\] \(.*\)(\(.*\))  Time elapsed: .* s  <<< \(FAILURE\|ERROR\)!/\2#\1/p' $mvnTestLog > $mvnFailedTests
     fi
-    for line in `cat mvnFailedTests`; do
-         sed -i "s/$line PASS/$line FAIL/" mvnTestList
+    for line in `cat $mvnFailedTests`; do
+         sed -i "s/$line PASS/$line FAIL/" $mvnTestList
     done
 }
 
 # in case some tests get initializationError
 handle_mvn_initError(){
-    echo -n > mvnInitErrorTests
-    sed -n 's/initializationError(\(.*\))  Time elapsed: .* sec  <<< \(FAILURE\|ERROR\)!/\1/p' mvn-test.log | sort | uniq >> mvnInitErrorTests
-    for line in `cat mvnInitErrorTests`;do
-        sed -i "s/$line#initializationError FAIL/$line INITIALIZATION_ERROR/" mvnTestList
+    echo -n > $mvnInitErrorTests
+    sed -n 's/initializationError(\(.*\))  Time elapsed: .* sec  <<< \(FAILURE\|ERROR\)!/\1/p' $mvnTestLog | sort | uniq >> $mvnInitErrorTests
+    for line in `cat $mvnInitErrorTests`;do
+        sed -i "s/$line#initializationError FAIL/$line INITIALIZATION_ERROR/" $mvnTestList
     done
-    if [ ! -s mvnInitErrorTests ];then
-        sed -n 's/.*) initializationError(\(.*\))/\1/p' mvn-test.log | sort | uniq >> mvnInitErrorTests
-        for line in `cat mvnInitErrorTests`;do
-            echo $line INITIALIZATION_ERROR >> mvnTestList
+    if [ ! -s $mvnInitErrorTests ];then
+        sed -n 's/.*) initializationError(\(.*\))/\1/p' $mvnTestLog | sort | uniq >> $mvnInitErrorTests
+        for line in `cat $mvnInitErrorTests`;do
+            echo $line INITIALIZATION_ERROR >> $mvnTestList
         done
     fi
 }
@@ -93,26 +112,30 @@ for proj in `ls Projects`; do
         check_empty_and_delete TestLists/$proj/$idx/d4jTestList
         
 
-        if [ ! -f TestLists/$proj/$idx/mvnTestList ]; then
+        if [ ! -f TestLists/$proj/$idx/$mvnTestList ]; then
             # collect mvn test list
             echo Collecting maven test list...
             cd Projects/$proj/$idx  
-            if [ ! -f mvn-test.log ] || [[ ! $(find -name "TEST-*.xml")  ]]  ||  file_contains_string mvn-test.log "java.lang.OutOfMemoryError:"; then
-                mvn -Dhttps.protocols=TLSv1.2 -DargLine="-Xmx4096m"  clean test -l mvn-test.log
+            if [ ! -f $mvnTestLog ] || [[ ! $(find -name "TEST-*.xml")  ]]  ||  file_contains_string $mvnTestLog "java.lang.OutOfMemoryError:"; then
+                if [ mod -eq 7 ];then
+                    JAVA_HOME=$java7_home mvn -Dhttps.protocols=TLSv1.2 -DargLine="-Xmx4096m"  clean test -l $mvnTestLog
+                else    
+                    JAVA_HOME=$java8_home mvn -DargLine="-Xmx4096m"  clean test -l $mvnTestLog
+                fi
             fi
             parse_mvn_test_list
             parse_mvn_failed_tests
             handle_mvn_initError
-            cd $pwd && cp Projects/$proj/$idx/mvnTestList TestLists/$proj/$idx/mvnTestList
-            check_has_fail TestLists/$proj/$idx/mvnTestList
+            cd $pwd && cp Projects/$proj/$idx/$mvnTestList TestLists/$proj/$idx/$mvnTestList
+            check_has_fail TestLists/$proj/$idx/$mvnTestList
         else
             echo Maven test list for $proj-$idx alreadly exists!
         fi
-        check_empty_and_delete TestLists/$proj/$idx/mvnTestList
+        check_empty_and_delete TestLists/$proj/$idx/$mvnTestList
 
 
         # clean up
-        #rm Projects/$proj/$idx/mvn-test.log Projects/$proj/$idx/mvnFailedTests 
+        #rm Projects/$proj/$idx/$mvnTestLog Projects/$proj/$idx/$mvnFailedTests 
 
         echo
 
