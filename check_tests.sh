@@ -7,14 +7,14 @@ if [ $# -eq 1 ] && [ $1 -eq 8 ];then
     mvnTestList="mvnTestList8"
     mvnFailedTests="mvnFailedTests8"
     mvnInitErrorTests="mvnInitErrorTests8"
-    echo **** Running in Java8 mod ****
+    echo "**** Running in Java8 mod ****"
 else
     mod=7
     mvnTestLog="mvnTestLog7"
     mvnTestList="mvnTestList7"
     mvnFailedTests="mvnFailedTests7"
     mvnInitErrorTests="mvnInitErrorTests7"
-    echo **** Running in Java7 mod ****
+    echo "**** Running in Java7 mod ****"
 fi
 
 cp -r Repository/* ~/.m2/repository/
@@ -117,7 +117,7 @@ for proj in `ls Projects`; do
             echo Collecting maven test list...
             cd Projects/$proj/$idx  
             if [ ! -f $mvnTestLog ] || [[ ! $(find -name "TEST-*.xml")  ]]  ||  file_contains_string $mvnTestLog "java.lang.OutOfMemoryError:"; then
-                if [ mod -eq 7 ];then
+                if [ $mod -eq 7 ];then
                     JAVA_HOME=$java7_home mvn -Dhttps.protocols=TLSv1.2 -DargLine="-Xmx4096m"  clean test -l $mvnTestLog
                 else    
                     JAVA_HOME=$java8_home mvn -DargLine="-Xmx4096m"  clean test -l $mvnTestLog

@@ -5,11 +5,11 @@ java7_home="/usr/local/java/jdk1.7.0_80/"
 if [ $# -eq 1 ] && [ $1 -eq 8 ];then
     mod=8
     compileLog="mvn-test-compile8.log"
-    echo **** Running in Java8 mod ****
+    echo "**** Running in Java8 mod ****"
 else
     mod=7
     compileLog="mvn-test-compile.log"
-    echo **** Running in Java7 mod ****
+    echo "**** Running in Java7 mod ****"
 fi
 
 cp -r Repository/* ~/.m2/repository/
