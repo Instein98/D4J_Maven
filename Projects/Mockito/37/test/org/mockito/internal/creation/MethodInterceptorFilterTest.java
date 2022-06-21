@@ -55,26 +55,32 @@ public class MethodInterceptorFilterTest extends TestBase {
     }
     
     @Test
-    public void shouldCreateSerializableMethodProxyIfIsSerializableMock() throws Exception {
-        MethodInterceptorFilter filter = new MethodInterceptorFilter(mockHanlder, (MockSettingsImpl) withSettings().serializable());
-        MethodProxy methodProxy = MethodProxy.create(String.class, String.class, "", "toString", "toString");
-        
-        // when
-        MockitoMethodProxy mockitoMethodProxy = filter.createMockitoMethodProxy(methodProxy);
-        
-        // then
-        assertThat(mockitoMethodProxy, instanceOf(SerializableMockitoMethodProxy.class));
-    }
+    public void shouldCreateSerializableMethodProxyIfIsSerializableMock() {}
+// Defects4J: flaky method
+//     @Test
+//     public void shouldCreateSerializableMethodProxyIfIsSerializableMock() throws Exception {
+//         MethodInterceptorFilter filter = new MethodInterceptorFilter(mockHanlder, (MockSettingsImpl) withSettings().serializable());
+//         MethodProxy methodProxy = MethodProxy.create(String.class, String.class, "", "toString", "toString");
+//         
+//         // when
+//         MockitoMethodProxy mockitoMethodProxy = filter.createMockitoMethodProxy(methodProxy);
+//         
+//         // then
+//         assertThat(mockitoMethodProxy, instanceOf(SerializableMockitoMethodProxy.class));
+//     }
     
     @Test
-    public void shouldCreateNONSerializableMethodProxyIfIsNotSerializableMock() throws Exception {
-        MethodInterceptorFilter filter = new MethodInterceptorFilter(mockHanlder, (MockSettingsImpl) withSettings());
-        MethodProxy methodProxy = MethodProxy.create(String.class, String.class, "", "toString", "toString");
-        
-        // when
-        MockitoMethodProxy mockitoMethodProxy = filter.createMockitoMethodProxy(methodProxy);
-        
-        // then
-        assertThat(mockitoMethodProxy, instanceOf(DelegatingMockitoMethodProxy.class));
-    }
+    public void shouldCreateNONSerializableMethodProxyIfIsNotSerializableMock() {}
+// Defects4J: flaky method
+//     @Test
+//     public void shouldCreateNONSerializableMethodProxyIfIsNotSerializableMock() throws Exception {
+//         MethodInterceptorFilter filter = new MethodInterceptorFilter(mockHanlder, (MockSettingsImpl) withSettings());
+//         MethodProxy methodProxy = MethodProxy.create(String.class, String.class, "", "toString", "toString");
+//         
+//         // when
+//         MockitoMethodProxy mockitoMethodProxy = filter.createMockitoMethodProxy(methodProxy);
+//         
+//         // then
+//         assertThat(mockitoMethodProxy, instanceOf(DelegatingMockitoMethodProxy.class));
+//     }
 }

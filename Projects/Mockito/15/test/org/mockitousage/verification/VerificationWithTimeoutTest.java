@@ -39,6 +39,9 @@ public class VerificationWithTimeoutTest extends TestBase {
     public void shouldVerifyWithTimeout() {}
 // Defects4J: flaky method
 //     @Test
+//     public void shouldVerifyWithTimeout() {}
+// Defects4J: flaky method
+//     @Test
 //     public void shouldVerifyWithTimeout() throws Exception {
 //         //given
 //         Thread t = waitAndExerciseMock(20);
@@ -58,20 +61,23 @@ public class VerificationWithTimeoutTest extends TestBase {
 //     }
 
     @Test
-    public void shouldFailVerificationWithTimeout() throws Exception {
-        //given
-        Thread t = waitAndExerciseMock(40);
-        
-        //when
-        t.start();
-        
-        //then
-        verify(mock, never()).clear();
-        try {
-            verify(mock, timeout(20).atLeastOnce()).clear();
-            fail();
-        } catch (MockitoAssertionError e) {}
-    }
+    public void shouldFailVerificationWithTimeout() {}
+// Defects4J: flaky method
+//     @Test
+//     public void shouldFailVerificationWithTimeout() throws Exception {
+//         //given
+//         Thread t = waitAndExerciseMock(40);
+//         
+//         //when
+//         t.start();
+//         
+//         //then
+//         verify(mock, never()).clear();
+//         try {
+//             verify(mock, timeout(20).atLeastOnce()).clear();
+//             fail();
+//         } catch (MockitoAssertionError e) {}
+//     }
     
     @Test
     public void shouldAllowMixingOtherModesWithTimeout() {}

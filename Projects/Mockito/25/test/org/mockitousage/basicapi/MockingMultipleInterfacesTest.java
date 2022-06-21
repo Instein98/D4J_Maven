@@ -20,14 +20,17 @@ public class MockingMultipleInterfacesTest extends TestBase {
     interface IBar {}
     
     @Test
-    public void shouldAllowMultipleInterfaces() {
-        //when
-        Foo mock = mock(Foo.class, withSettings().extraInterfaces(IFoo.class, IBar.class));
-        
-        //then
-        assertThat(mock, is(IFoo.class));
-        assertThat(mock, is(IBar.class));
-    }
+    public void shouldAllowMultipleInterfaces() {}
+// Defects4J: flaky method
+//     @Test
+//     public void shouldAllowMultipleInterfaces() {
+//         //when
+//         Foo mock = mock(Foo.class, withSettings().extraInterfaces(IFoo.class, IBar.class));
+//         
+//         //then
+//         assertThat(mock, is(IFoo.class));
+//         assertThat(mock, is(IBar.class));
+//     }
     
     @Test
     public void shouldScreamWhenNullPassedInsteadOfAnInterface() {

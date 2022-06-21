@@ -300,30 +300,36 @@ public class MocksSerializationTest extends TestBase implements Serializable {
     }
 
     @Test
-    public void should_serialize_object_mock() throws Exception {
-        // given
-        Any mock = mock(Any.class);
-
-        // when
-        ByteArrayOutputStream serialized = serializeMock(mock);
-
-        // then
-        deserializeMock(serialized, Any.class);
-    }
+    public void should_serialize_object_mock() {}
+// Defects4J: flaky method
+//     @Test
+//     public void should_serialize_object_mock() throws Exception {
+//         // given
+//         Any mock = mock(Any.class);
+// 
+//         // when
+//         ByteArrayOutputStream serialized = serializeMock(mock);
+// 
+//         // then
+//         deserializeMock(serialized, Any.class);
+//     }
 
     @Test
-    public void should_serialize_real_partial_mock() throws Exception {
-        // given
-        Any mock = mock(Any.class, withSettings().serializable());
-        when(mock.matches(anyObject())).thenCallRealMethod();
-
-        // when
-        ByteArrayOutputStream serialized = serializeMock(mock);
-
-        // then
-        Any readObject = deserializeMock(serialized, Any.class);
-        readObject.matches("");
-    }
+    public void should_serialize_real_partial_mock() {}
+// Defects4J: flaky method
+//     @Test
+//     public void should_serialize_real_partial_mock() throws Exception {
+//         // given
+//         Any mock = mock(Any.class, withSettings().serializable());
+//         when(mock.matches(anyObject())).thenCallRealMethod();
+// 
+//         // when
+//         ByteArrayOutputStream serialized = serializeMock(mock);
+// 
+//         // then
+//         Any readObject = deserializeMock(serialized, Any.class);
+//         readObject.matches("");
+//     }
 
     class AlreadySerializable implements Serializable {}
 

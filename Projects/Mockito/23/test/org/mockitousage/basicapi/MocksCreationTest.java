@@ -50,20 +50,23 @@ public class MocksCreationTest extends TestBase {
     }
     
     @Test
-    public void shouldCombineMockNameAndExtraInterfaces() {
-        //given
-        IMethods mock = mock(IMethods.class, withSettings()
-                .extraInterfaces(List.class)
-                .name("great mockie"));
-        
-        //when
-        String name = mock.toString();
-        
-        //then
-        assertContains("great mockie", name);
-        //and
-        assertThat(mock, is(List.class));
-    }
+    public void shouldCombineMockNameAndExtraInterfaces() {}
+// Defects4J: flaky method
+//     @Test
+//     public void shouldCombineMockNameAndExtraInterfaces() {
+//         //given
+//         IMethods mock = mock(IMethods.class, withSettings()
+//                 .extraInterfaces(List.class)
+//                 .name("great mockie"));
+//         
+//         //when
+//         String name = mock.toString();
+//         
+//         //then
+//         assertContains("great mockie", name);
+//         //and
+//         assertThat(mock, is(List.class));
+//     }
     
     @Test
     public void shouldSpecifyMockNameViaSettings() {

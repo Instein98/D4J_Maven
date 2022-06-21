@@ -254,27 +254,29 @@ public class CrossModuleMethodMotionTest extends CompilerTestCase {
          });
   }
 
-  public void testTwoMethods() {
-    test(createModuleChain(
-             "function Foo() {}" +
-             "Foo.prototype.baz = function() {};",
-             // Module 2
-             "Foo.prototype.callBaz = function() { this.baz(); }",
-             // Module 3
-             "(new Foo).callBaz()"),
-         new String[] {
-             STUB_DECLARATIONS +
-             "function Foo() {}" +
-             "Foo.prototype.baz = JSCompiler_stubMethod(1);",
-             // Module 2
-             "Foo.prototype.callBaz = JSCompiler_stubMethod(0);",
-             // Module 3
-             "Foo.prototype.baz = JSCompiler_unstubMethod(1, function() {});" +
-             "Foo.prototype.callBaz = " +
-             "  JSCompiler_unstubMethod(0, function() { this.baz(); });" +
-             "(new Foo).callBaz()"
-         });
-  }
+  public void testTwoMethods() {}
+// Defects4J: flaky method
+//   public void testTwoMethods() {
+//     test(createModuleChain(
+//              "function Foo() {}" +
+//              "Foo.prototype.baz = function() {};",
+//              // Module 2
+//              "Foo.prototype.callBaz = function() { this.baz(); }",
+//              // Module 3
+//              "(new Foo).callBaz()"),
+//          new String[] {
+//              STUB_DECLARATIONS +
+//              "function Foo() {}" +
+//              "Foo.prototype.baz = JSCompiler_stubMethod(1);",
+//              // Module 2
+//              "Foo.prototype.callBaz = JSCompiler_stubMethod(0);",
+//              // Module 3
+//              "Foo.prototype.baz = JSCompiler_unstubMethod(1, function() {});" +
+//              "Foo.prototype.callBaz = " +
+//              "  JSCompiler_unstubMethod(0, function() { this.baz(); });" +
+//              "(new Foo).callBaz()"
+//          });
+//   }
 
   public void testTwoMethods2() {
     // if the programmer screws up the module order, we don't try to correct
@@ -368,45 +370,47 @@ public class CrossModuleMethodMotionTest extends CompilerTestCase {
         });
   }
 
-  public void testClosureVariableReads3() {
-    test(createModuleChain(
-            "function Foo() {}" +
-            "Foo.prototype.b1 = function() {" +
-            "  Foo.prototype.b2 = function() {" +
-            "    var x = 1;" +
-            "    Foo.prototype.b3 = function() {" +
-            "      x;" +
-            "    }" +
-            "  }" +
-            "};",
-            // Module 2
-            "var y = new Foo(); y.b1();",
-            // Module 3
-            "y = new Foo(); z.b2();",
-            // Module 4
-            "y = new Foo(); z.b3();"
-            ),
-         new String[] {
-           STUB_DECLARATIONS +
-           "function Foo() {}" +
-           "Foo.prototype.b1 = JSCompiler_stubMethod(0);",
-           // Module 2
-           "Foo.prototype.b1 = JSCompiler_unstubMethod(0, function() {" +
-           "  Foo.prototype.b2 = JSCompiler_stubMethod(1);" +
-           "});" +
-           "var y = new Foo(); y.b1();",
-           // Module 3
-           "Foo.prototype.b2 = JSCompiler_unstubMethod(1, function() {" +
-           "  var x = 1;" +
-           "  Foo.prototype.b3 = function() {" +
-           "    x;" +
-           "  }" +
-           "});" +
-           "y = new Foo(); z.b2();",
-           // Module 4
-           "y = new Foo(); z.b3();"
-        });
-  }
+  public void testClosureVariableReads3() {}
+// Defects4J: flaky method
+//   public void testClosureVariableReads3() {
+//     test(createModuleChain(
+//             "function Foo() {}" +
+//             "Foo.prototype.b1 = function() {" +
+//             "  Foo.prototype.b2 = function() {" +
+//             "    var x = 1;" +
+//             "    Foo.prototype.b3 = function() {" +
+//             "      x;" +
+//             "    }" +
+//             "  }" +
+//             "};",
+//             // Module 2
+//             "var y = new Foo(); y.b1();",
+//             // Module 3
+//             "y = new Foo(); z.b2();",
+//             // Module 4
+//             "y = new Foo(); z.b3();"
+//             ),
+//          new String[] {
+//            STUB_DECLARATIONS +
+//            "function Foo() {}" +
+//            "Foo.prototype.b1 = JSCompiler_stubMethod(0);",
+//            // Module 2
+//            "Foo.prototype.b1 = JSCompiler_unstubMethod(0, function() {" +
+//            "  Foo.prototype.b2 = JSCompiler_stubMethod(1);" +
+//            "});" +
+//            "var y = new Foo(); y.b1();",
+//            // Module 3
+//            "Foo.prototype.b2 = JSCompiler_unstubMethod(1, function() {" +
+//            "  var x = 1;" +
+//            "  Foo.prototype.b3 = function() {" +
+//            "    x;" +
+//            "  }" +
+//            "});" +
+//            "y = new Foo(); z.b2();",
+//            // Module 4
+//            "y = new Foo(); z.b3();"
+//         });
+//   }
 
   // Read of global variable is fine.
   public void testNoClosureVariableReads1() {

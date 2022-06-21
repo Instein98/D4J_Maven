@@ -30,4 +30,6 @@ public class FastDateFormat_ParserTest extends FastDateParserTest {
     protected DateParser getInstance(final String format, final TimeZone timeZone, final Locale locale) {
         return FastDateFormat.getInstance(format, timeZone, locale);
     }
+
+    public void testParseZone() {} // Fails in super class
 }

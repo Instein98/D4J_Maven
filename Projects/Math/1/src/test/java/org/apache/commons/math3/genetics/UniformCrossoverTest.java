@@ -24,6 +24,7 @@ import org.junit.Assert;
 import org.apache.commons.math3.exception.DimensionMismatchException;
 import org.apache.commons.math3.exception.MathIllegalArgumentException;
 import org.apache.commons.math3.exception.OutOfRangeException;
+import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -33,8 +34,10 @@ public class UniformCrossoverTest {
     private static final List<Integer> p2 = new ArrayList<Integer>(LEN);
 
     @SuppressWarnings("boxing")
-    @BeforeClass
-    public static void setUpBeforeClass() {
+    @Before
+    public void setUpBeforeClass() {
+        p1.clear();
+        p2.clear();
         for (int i = 0; i < LEN; i++) {
             p1.add(0);
             p2.add(1);

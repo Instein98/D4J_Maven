@@ -23,31 +23,37 @@ public class ReplacingObjectMethodsTest extends TestBase {
         assertEquals("Mock for DummyInterface, hashCode: " + dummyInterface.hashCode(), dummyInterface.toString());
     }
     
-    @Test 
-    public void shouldReplaceObjectMethods() {
-        Object mock = Mockito.mock(ObjectMethodsOverridden.class);
-        Object otherMock = Mockito.mock(ObjectMethodsOverridden.class);
-        
-        assertThat(mock, equalTo(mock));
-        assertThat(mock, not(equalTo(otherMock)));
-        
-        assertThat(mock.hashCode(), not(equalTo(otherMock.hashCode())));
-        
-        assertContains("Mock for ObjectMethodsOverridden", mock.toString());
-    }
+    @Test
+    public void shouldReplaceObjectMethods() {}
+// Defects4J: flaky method
+//     @Test 
+//     public void shouldReplaceObjectMethods() {
+//         Object mock = Mockito.mock(ObjectMethodsOverridden.class);
+//         Object otherMock = Mockito.mock(ObjectMethodsOverridden.class);
+//         
+//         assertThat(mock, equalTo(mock));
+//         assertThat(mock, not(equalTo(otherMock)));
+//         
+//         assertThat(mock.hashCode(), not(equalTo(otherMock.hashCode())));
+//         
+//         assertContains("Mock for ObjectMethodsOverridden", mock.toString());
+//     }
     
-    @Test 
-    public void shouldReplaceObjectMethodsWhenOverridden() {
-        Object mock = Mockito.mock(ObjectMethodsOverriddenSubclass.class);
-        Object otherMock = Mockito.mock(ObjectMethodsOverriddenSubclass.class);
-        
-        assertThat(mock, equalTo(mock));
-        assertThat(mock, not(equalTo(otherMock)));
-        
-        assertThat(mock.hashCode(), not(equalTo(otherMock.hashCode())));
-        
-        assertContains("Mock for ObjectMethodsOverriddenSubclass", mock.toString());
-    }
+    @Test
+    public void shouldReplaceObjectMethodsWhenOverridden() {}
+// Defects4J: flaky method
+//     @Test 
+//     public void shouldReplaceObjectMethodsWhenOverridden() {
+//         Object mock = Mockito.mock(ObjectMethodsOverriddenSubclass.class);
+//         Object otherMock = Mockito.mock(ObjectMethodsOverriddenSubclass.class);
+//         
+//         assertThat(mock, equalTo(mock));
+//         assertThat(mock, not(equalTo(otherMock)));
+//         
+//         assertThat(mock.hashCode(), not(equalTo(otherMock.hashCode())));
+//         
+//         assertContains("Mock for ObjectMethodsOverriddenSubclass", mock.toString());
+//     }
     
     public static class ObjectMethodsOverridden {
         public boolean equals(Object o) {

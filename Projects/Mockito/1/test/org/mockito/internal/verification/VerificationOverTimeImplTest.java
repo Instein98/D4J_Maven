@@ -60,11 +60,14 @@ public class VerificationOverTimeImplTest {
 //     }
 
     @Test
-    public void should_not_wrap_other_exceptions() {
-        RuntimeException toBeThrown = new RuntimeException();
-        exception.expect(is(toBeThrown));
-
-        doThrow(toBeThrown).when(delegate).verify(null);
-        impl.verify(null);
-    }
+    public void should_not_wrap_other_exceptions() {}
+// Defects4J: flaky method
+//     @Test
+//     public void should_not_wrap_other_exceptions() {
+//         RuntimeException toBeThrown = new RuntimeException();
+//         exception.expect(is(toBeThrown));
+// 
+//         doThrow(toBeThrown).when(delegate).verify(null);
+//         impl.verify(null);
+//     }
 }

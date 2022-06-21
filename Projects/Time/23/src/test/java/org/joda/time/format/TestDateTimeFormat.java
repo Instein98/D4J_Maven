@@ -751,29 +751,33 @@ public class TestDateTimeFormat extends TestCase {
     }
 
     //-----------------------------------------------------------------------
-    public void testFormat_zoneText() {
-        DateTime dt = new DateTime(2004, 6, 9, 10, 20, 30, 40, UTC);
-        DateTimeFormatter f = DateTimeFormat.forPattern("z").withLocale(Locale.UK);
-        assertEquals(dt.toString(), "UTC", f.print(dt));
-        
-        dt = dt.withZone(NEWYORK);
-        assertEquals(dt.toString(), "EDT", f.print(dt));
-        
-        dt = dt.withZone(TOKYO);
-        assertEquals(dt.toString(), "JST", f.print(dt));
-    }
+    public void testFormat_zoneText() {}
+// Defects4J: flaky method
+//     public void testFormat_zoneText() {
+//         DateTime dt = new DateTime(2004, 6, 9, 10, 20, 30, 40, UTC);
+//         DateTimeFormatter f = DateTimeFormat.forPattern("z").withLocale(Locale.UK);
+//         assertEquals(dt.toString(), "UTC", f.print(dt));
+//         
+//         dt = dt.withZone(NEWYORK);
+//         assertEquals(dt.toString(), "EDT", f.print(dt));
+//         
+//         dt = dt.withZone(TOKYO);
+//         assertEquals(dt.toString(), "JST", f.print(dt));
+//     }
 
-    public void testFormat_zoneLongText() {
-        DateTime dt = new DateTime(2004, 6, 9, 10, 20, 30, 40, UTC);
-        DateTimeFormatter f = DateTimeFormat.forPattern("zzzz").withLocale(Locale.UK);
-        assertEquals(dt.toString(), "Coordinated Universal Time", f.print(dt));
-        
-        dt = dt.withZone(NEWYORK);
-        assertEquals(dt.toString(), "Eastern Daylight Time", f.print(dt));
-        
-        dt = dt.withZone(TOKYO);
-        assertEquals(dt.toString(), "Japan Standard Time", f.print(dt));
-    }
+    public void testFormat_zoneLongText() {}
+// Defects4J: flaky method
+//     public void testFormat_zoneLongText() {
+//         DateTime dt = new DateTime(2004, 6, 9, 10, 20, 30, 40, UTC);
+//         DateTimeFormatter f = DateTimeFormat.forPattern("zzzz").withLocale(Locale.UK);
+//         assertEquals(dt.toString(), "Coordinated Universal Time", f.print(dt));
+//         
+//         dt = dt.withZone(NEWYORK);
+//         assertEquals(dt.toString(), "Eastern Daylight Time", f.print(dt));
+//         
+//         dt = dt.withZone(TOKYO);
+//         assertEquals(dt.toString(), "Japan Standard Time", f.print(dt));
+//     }
 
     //-----------------------------------------------------------------------
     public void testFormat_zoneAmount() {

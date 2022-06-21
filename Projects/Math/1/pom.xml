@@ -338,7 +338,19 @@
     <commons.jacoco.version>0.6.2.201302030002</commons.jacoco.version>
   </properties> 
 
-  <build>
+    <profiles>  
+    <profile>
+      <id>8</id>
+      <activation>
+        <jdk>1.8</jdk>
+      </activation>
+      <properties>
+        <commons.jacoco.version>0.8.4</commons.jacoco.version>
+      </properties>
+    </profile>
+  </profiles>
+
+<build>
       <plugins>
 <plugin>
 	<groupId>org.mudebug</groupId>

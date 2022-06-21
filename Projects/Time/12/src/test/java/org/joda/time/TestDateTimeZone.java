@@ -660,25 +660,29 @@ public class TestDateTimeZone extends TestCase {
       JDK6 = jdk6;
     }
 
-    public void testGetShortName() {
-        DateTimeZone zone = DateTimeZone.forID("Europe/London");
-        assertEquals("BST", zone.getShortName(TEST_TIME_SUMMER));
-        assertEquals("GMT", zone.getShortName(TEST_TIME_WINTER));
-        assertEquals("BST", zone.getShortName(TEST_TIME_SUMMER, Locale.ENGLISH));
-    }
+    public void testGetShortName() {}
+// Defects4J: flaky method
+//     public void testGetShortName() {
+//         DateTimeZone zone = DateTimeZone.forID("Europe/London");
+//         assertEquals("BST", zone.getShortName(TEST_TIME_SUMMER));
+//         assertEquals("GMT", zone.getShortName(TEST_TIME_WINTER));
+//         assertEquals("BST", zone.getShortName(TEST_TIME_SUMMER, Locale.ENGLISH));
+//     }
 
-    public void testGetShortName_berlin() {
-        DateTimeZone berlin = DateTimeZone.forID("Europe/Berlin");
-        assertEquals("CET", berlin.getShortName(TEST_TIME_WINTER, Locale.ENGLISH));
-        assertEquals("CEST", berlin.getShortName(TEST_TIME_SUMMER, Locale.ENGLISH));
-        if (JDK6) {
-          assertEquals("MEZ", berlin.getShortName(TEST_TIME_WINTER, Locale.GERMAN));
-          assertEquals("MESZ", berlin.getShortName(TEST_TIME_SUMMER, Locale.GERMAN));
-        } else {
-          assertEquals("CET", berlin.getShortName(TEST_TIME_WINTER, Locale.GERMAN));
-          assertEquals("CEST", berlin.getShortName(TEST_TIME_SUMMER, Locale.GERMAN));
-        }
-    }
+    public void testGetShortName_berlin() {}
+// Defects4J: flaky method
+//     public void testGetShortName_berlin() {
+//         DateTimeZone berlin = DateTimeZone.forID("Europe/Berlin");
+//         assertEquals("CET", berlin.getShortName(TEST_TIME_WINTER, Locale.ENGLISH));
+//         assertEquals("CEST", berlin.getShortName(TEST_TIME_SUMMER, Locale.ENGLISH));
+//         if (JDK6) {
+//           assertEquals("MEZ", berlin.getShortName(TEST_TIME_WINTER, Locale.GERMAN));
+//           assertEquals("MESZ", berlin.getShortName(TEST_TIME_SUMMER, Locale.GERMAN));
+//         } else {
+//           assertEquals("CET", berlin.getShortName(TEST_TIME_WINTER, Locale.GERMAN));
+//           assertEquals("CEST", berlin.getShortName(TEST_TIME_SUMMER, Locale.GERMAN));
+//         }
+//     }
 
     public void testGetShortNameProviderName() {
         assertEquals(null, DateTimeZone.getNameProvider().getShortName(null, "Europe/London", "BST"));
@@ -692,25 +696,29 @@ public class TestDateTimeZone extends TestCase {
         assertEquals("Europe/London", zone.getShortName(TEST_TIME_SUMMER, Locale.ENGLISH));
     }
 
-    public void testGetName() {
-        DateTimeZone zone = DateTimeZone.forID("Europe/London");
-        assertEquals("British Summer Time", zone.getName(TEST_TIME_SUMMER));
-        assertEquals("Greenwich Mean Time", zone.getName(TEST_TIME_WINTER));
-        assertEquals("British Summer Time", zone.getName(TEST_TIME_SUMMER, Locale.ENGLISH));
-    }
+    public void testGetName() {}
+// Defects4J: flaky method
+//     public void testGetName() {
+//         DateTimeZone zone = DateTimeZone.forID("Europe/London");
+//         assertEquals("British Summer Time", zone.getName(TEST_TIME_SUMMER));
+//         assertEquals("Greenwich Mean Time", zone.getName(TEST_TIME_WINTER));
+//         assertEquals("British Summer Time", zone.getName(TEST_TIME_SUMMER, Locale.ENGLISH));
+//     }
 
-    public void testGetName_berlin() {
-      DateTimeZone berlin = DateTimeZone.forID("Europe/Berlin");
-      assertEquals("Central European Time", berlin.getName(TEST_TIME_WINTER, Locale.ENGLISH));
-      assertEquals("Central European Summer Time", berlin.getName(TEST_TIME_SUMMER, Locale.ENGLISH));
-      if (JDK6) {
-        assertEquals("Mitteleurop\u00e4ische Zeit", berlin.getName(TEST_TIME_WINTER, Locale.GERMAN));
-        assertEquals("Mitteleurop\u00e4ische Sommerzeit", berlin.getName(TEST_TIME_SUMMER, Locale.GERMAN));
-      } else {
-        assertEquals("Zentraleurop\u00e4ische Zeit", berlin.getName(TEST_TIME_WINTER, Locale.GERMAN));
-        assertEquals("Zentraleurop\u00e4ische Sommerzeit", berlin.getName(TEST_TIME_SUMMER, Locale.GERMAN));
-      }
-  }
+    public void testGetName_berlin() {}
+// Defects4J: flaky method
+//     public void testGetName_berlin() {
+//       DateTimeZone berlin = DateTimeZone.forID("Europe/Berlin");
+//       assertEquals("Central European Time", berlin.getName(TEST_TIME_WINTER, Locale.ENGLISH));
+//       assertEquals("Central European Summer Time", berlin.getName(TEST_TIME_SUMMER, Locale.ENGLISH));
+//       if (JDK6) {
+//         assertEquals("Mitteleurop\u00e4ische Zeit", berlin.getName(TEST_TIME_WINTER, Locale.GERMAN));
+//         assertEquals("Mitteleurop\u00e4ische Sommerzeit", berlin.getName(TEST_TIME_SUMMER, Locale.GERMAN));
+//       } else {
+//         assertEquals("Zentraleurop\u00e4ische Zeit", berlin.getName(TEST_TIME_WINTER, Locale.GERMAN));
+//         assertEquals("Zentraleurop\u00e4ische Sommerzeit", berlin.getName(TEST_TIME_SUMMER, Locale.GERMAN));
+//       }
+//   }
 
     public void testGetNameProviderName() {
         assertEquals(null, DateTimeZone.getNameProvider().getName(null, "Europe/London", "BST"));

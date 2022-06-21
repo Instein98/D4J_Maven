@@ -36,16 +36,19 @@ public class VerificationAfterDelayTest extends TestBase {
     }
 
     @Test
-    public void shouldVerifyNormallyWithSpecificTimes() throws Exception {
-        // given
-        Thread t = waitAndExerciseMock(20);
-
-        // when
-        t.start();
-
-        // then
-        verify(mock, after(50).times(1)).clear();
-    }
+    public void shouldVerifyNormallyWithSpecificTimes() {}
+// Defects4J: flaky method
+//     @Test
+//     public void shouldVerifyNormallyWithSpecificTimes() throws Exception {
+//         // given
+//         Thread t = waitAndExerciseMock(20);
+// 
+//         // when
+//         t.start();
+// 
+//         // then
+//         verify(mock, after(50).times(1)).clear();
+//     }
 
     @Test
     public void shouldVerifyNormallyWithAtLeast() {}

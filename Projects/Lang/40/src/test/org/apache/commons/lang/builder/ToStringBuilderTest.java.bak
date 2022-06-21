@@ -323,13 +323,15 @@ public class ToStringBuilderTest extends TestCase {
     
     // Reflection hierarchy tests
 
-    public void testReflectionHierarchyArrayList() {
-        List base = new ArrayList();
-        String baseStr = this.toBaseString(base);
-        assertEquals(baseStr + "[elementData={<null>,<null>,<null>,<null>,<null>,<null>,<null>,<null>,<null>,<null>},size=0,modCount=0]", ToStringBuilder.reflectionToString(base, null, true));
-        assertEquals(baseStr + "[size=0]", ToStringBuilder.reflectionToString(base, null, false));
-        this.validateEmptyToStringStyleRegistry();
-    }
+    public void testReflectionHierarchyArrayList() {}
+// Defects4J: flaky method
+//     public void testReflectionHierarchyArrayList() {
+//         List base = new ArrayList();
+//         String baseStr = this.toBaseString(base);
+//         assertEquals(baseStr + "[elementData={<null>,<null>,<null>,<null>,<null>,<null>,<null>,<null>,<null>,<null>},size=0,modCount=0]", ToStringBuilder.reflectionToString(base, null, true));
+//         assertEquals(baseStr + "[size=0]", ToStringBuilder.reflectionToString(base, null, false));
+//         this.validateEmptyToStringStyleRegistry();
+//     }
 
     public void testReflectionHierarchy() {
         ReflectionTestFixtureA baseA = new ReflectionTestFixtureA();

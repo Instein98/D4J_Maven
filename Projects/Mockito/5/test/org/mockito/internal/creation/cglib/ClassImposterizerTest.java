@@ -62,11 +62,14 @@ public class ClassImposterizerTest extends TestBase {
     }
     
     @Test
-    public void shouldUseAnicilliaryTypes() {
-        SomeClass mock = imposterizer.imposterise(new MethodInterceptorStub(), SomeClass.class, SomeInterface.class);
-        
-        assertThat(mock, is(instanceOf(SomeInterface.class)));
-    }
+    public void shouldUseAnicilliaryTypes() {}
+// Defects4J: flaky method
+//     @Test
+//     public void shouldUseAnicilliaryTypes() {
+//         SomeClass mock = imposterizer.imposterise(new MethodInterceptorStub(), SomeClass.class, SomeInterface.class);
+//         
+//         assertThat(mock, is(instanceOf(SomeInterface.class)));
+//     }
 
     @Test
     public void shouldCreateClassByConstructor() {

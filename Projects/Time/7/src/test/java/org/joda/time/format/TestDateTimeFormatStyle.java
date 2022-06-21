@@ -233,31 +233,35 @@ public class TestDateTimeFormatStyle extends TestCase {
         assertEquals(expect, f.withLocale(FRANCE).print(dt));
     }
 
-    public void testForStyle_longTime() throws Exception {
-        DateTimeFormatter f = DateTimeFormat.longTime();
-        DateTimeFormatter g = DateTimeFormat.forStyle("-L");
-        assertSame(g, f);
-        DateTime dt = new DateTime(2004, 6, 9, 10, 20, 30, 0);
-        String expect = DateFormat.getTimeInstance(DateFormat.LONG, UK).format(dt.toDate());
-        assertEquals(expect, f.print(dt));
-        expect = DateFormat.getTimeInstance(DateFormat.LONG, US).format(dt.toDate());
-        assertEquals(expect, f.withLocale(US).print(dt));
-        expect = DateFormat.getTimeInstance(DateFormat.LONG, FRANCE).format(dt.toDate());
-        assertEquals(expect, f.withLocale(FRANCE).print(dt));
-    }
+    public void testForStyle_longTime() {}
+// Defects4J: flaky method
+//     public void testForStyle_longTime() throws Exception {
+//         DateTimeFormatter f = DateTimeFormat.longTime();
+//         DateTimeFormatter g = DateTimeFormat.forStyle("-L");
+//         assertSame(g, f);
+//         DateTime dt = new DateTime(2004, 6, 9, 10, 20, 30, 0);
+//         String expect = DateFormat.getTimeInstance(DateFormat.LONG, UK).format(dt.toDate());
+//         assertEquals(expect, f.print(dt));
+//         expect = DateFormat.getTimeInstance(DateFormat.LONG, US).format(dt.toDate());
+//         assertEquals(expect, f.withLocale(US).print(dt));
+//         expect = DateFormat.getTimeInstance(DateFormat.LONG, FRANCE).format(dt.toDate());
+//         assertEquals(expect, f.withLocale(FRANCE).print(dt));
+//     }
 
-    public void testForStyle_longDateTime() throws Exception {
-        DateTimeFormatter f = DateTimeFormat.longDateTime();
-        DateTimeFormatter g = DateTimeFormat.forStyle("LL");
-        assertSame(g, f);
-        DateTime dt = new DateTime(2004, 6, 9, 10, 20, 30, 0);
-        String expect = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, UK).format(dt.toDate());
-        assertEquals(expect, f.print(dt));
-        expect = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, US).format(dt.toDate());
-        assertEquals(expect, f.withLocale(US).print(dt));
-        expect = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, FRANCE).format(dt.toDate());
-        assertEquals(expect, f.withLocale(FRANCE).print(dt));
-    }
+    public void testForStyle_longDateTime() {}
+// Defects4J: flaky method
+//     public void testForStyle_longDateTime() throws Exception {
+//         DateTimeFormatter f = DateTimeFormat.longDateTime();
+//         DateTimeFormatter g = DateTimeFormat.forStyle("LL");
+//         assertSame(g, f);
+//         DateTime dt = new DateTime(2004, 6, 9, 10, 20, 30, 0);
+//         String expect = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, UK).format(dt.toDate());
+//         assertEquals(expect, f.print(dt));
+//         expect = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, US).format(dt.toDate());
+//         assertEquals(expect, f.withLocale(US).print(dt));
+//         expect = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, FRANCE).format(dt.toDate());
+//         assertEquals(expect, f.withLocale(FRANCE).print(dt));
+//     }
 
     //-----------------------------------------------------------------------
     public void testForStyle_fullDate() throws Exception {
@@ -273,31 +277,35 @@ public class TestDateTimeFormatStyle extends TestCase {
         assertEquals(expect, f.withLocale(FRANCE).print(dt));
     }
 
-    public void testForStyle_fullTime() throws Exception {
-        DateTimeFormatter f = DateTimeFormat.fullTime();
-        DateTimeFormatter g = DateTimeFormat.forStyle("-F");
-        assertSame(g, f);
-        DateTime dt = new DateTime(2004, 6, 9, 10, 20, 30, 0);
-        String expect = DateFormat.getTimeInstance(DateFormat.FULL, UK).format(dt.toDate());
-        assertEquals(expect, f.print(dt));
-        expect = DateFormat.getTimeInstance(DateFormat.FULL, US).format(dt.toDate());
-        assertEquals(expect, f.withLocale(US).print(dt));
-        expect = DateFormat.getTimeInstance(DateFormat.FULL, FRANCE).format(dt.toDate());
-        assertEquals(expect, f.withLocale(FRANCE).print(dt));
-    }
+    public void testForStyle_fullTime() {}
+// Defects4J: flaky method
+//     public void testForStyle_fullTime() throws Exception {
+//         DateTimeFormatter f = DateTimeFormat.fullTime();
+//         DateTimeFormatter g = DateTimeFormat.forStyle("-F");
+//         assertSame(g, f);
+//         DateTime dt = new DateTime(2004, 6, 9, 10, 20, 30, 0);
+//         String expect = DateFormat.getTimeInstance(DateFormat.FULL, UK).format(dt.toDate());
+//         assertEquals(expect, f.print(dt));
+//         expect = DateFormat.getTimeInstance(DateFormat.FULL, US).format(dt.toDate());
+//         assertEquals(expect, f.withLocale(US).print(dt));
+//         expect = DateFormat.getTimeInstance(DateFormat.FULL, FRANCE).format(dt.toDate());
+//         assertEquals(expect, f.withLocale(FRANCE).print(dt));
+//     }
 
-    public void testForStyle_fullDateTime() throws Exception {
-        DateTimeFormatter f = DateTimeFormat.fullDateTime();
-        DateTimeFormatter g = DateTimeFormat.forStyle("FF");
-        assertSame(g, f);
-        DateTime dt = new DateTime(2004, 6, 9, 10, 20, 30, 0);
-        String expect = DateFormat.getDateTimeInstance(DateFormat.FULL, DateFormat.FULL, UK).format(dt.toDate());
-        assertEquals(expect, f.print(dt));
-        expect = DateFormat.getDateTimeInstance(DateFormat.FULL, DateFormat.FULL, US).format(dt.toDate());
-        assertEquals(expect, f.withLocale(US).print(dt));
-        expect = DateFormat.getDateTimeInstance(DateFormat.FULL, DateFormat.FULL, FRANCE).format(dt.toDate());
-        assertEquals(expect, f.withLocale(FRANCE).print(dt));
-    }
+    public void testForStyle_fullDateTime() {}
+// Defects4J: flaky method
+//     public void testForStyle_fullDateTime() throws Exception {
+//         DateTimeFormatter f = DateTimeFormat.fullDateTime();
+//         DateTimeFormatter g = DateTimeFormat.forStyle("FF");
+//         assertSame(g, f);
+//         DateTime dt = new DateTime(2004, 6, 9, 10, 20, 30, 0);
+//         String expect = DateFormat.getDateTimeInstance(DateFormat.FULL, DateFormat.FULL, UK).format(dt.toDate());
+//         assertEquals(expect, f.print(dt));
+//         expect = DateFormat.getDateTimeInstance(DateFormat.FULL, DateFormat.FULL, US).format(dt.toDate());
+//         assertEquals(expect, f.withLocale(US).print(dt));
+//         expect = DateFormat.getDateTimeInstance(DateFormat.FULL, DateFormat.FULL, FRANCE).format(dt.toDate());
+//         assertEquals(expect, f.withLocale(FRANCE).print(dt));
+//     }
 
     //-----------------------------------------------------------------------
     public void testForStyle_shortMediumDateTime() throws Exception {
@@ -311,27 +319,31 @@ public class TestDateTimeFormatStyle extends TestCase {
         assertEquals(expect, f.withLocale(FRANCE).print(dt));
     }
 
-    public void testForStyle_shortLongDateTime() throws Exception {
-        DateTimeFormatter f = DateTimeFormat.forStyle("SL");
-        DateTime dt = new DateTime(2004, 6, 9, 10, 20, 30, 0);
-        String expect = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.LONG, UK).format(dt.toDate());
-        assertEquals(expect, f.print(dt));
-        expect = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.LONG, US).format(dt.toDate());
-        assertEquals(expect, f.withLocale(US).print(dt));
-        expect = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.LONG, FRANCE).format(dt.toDate());
-        assertEquals(expect, f.withLocale(FRANCE).print(dt));
-    }
+    public void testForStyle_shortLongDateTime() {}
+// Defects4J: flaky method
+//     public void testForStyle_shortLongDateTime() throws Exception {
+//         DateTimeFormatter f = DateTimeFormat.forStyle("SL");
+//         DateTime dt = new DateTime(2004, 6, 9, 10, 20, 30, 0);
+//         String expect = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.LONG, UK).format(dt.toDate());
+//         assertEquals(expect, f.print(dt));
+//         expect = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.LONG, US).format(dt.toDate());
+//         assertEquals(expect, f.withLocale(US).print(dt));
+//         expect = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.LONG, FRANCE).format(dt.toDate());
+//         assertEquals(expect, f.withLocale(FRANCE).print(dt));
+//     }
 
-    public void testForStyle_shortFullDateTime() throws Exception {
-        DateTimeFormatter f = DateTimeFormat.forStyle("SF");
-        DateTime dt = new DateTime(2004, 6, 9, 10, 20, 30, 0);
-        String expect = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.FULL, UK).format(dt.toDate());
-        assertEquals(expect, f.print(dt));
-        expect = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.FULL, US).format(dt.toDate());
-        assertEquals(expect, f.withLocale(US).print(dt));
-        expect = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.FULL, FRANCE).format(dt.toDate());
-        assertEquals(expect, f.withLocale(FRANCE).print(dt));
-    }
+    public void testForStyle_shortFullDateTime() {}
+// Defects4J: flaky method
+//     public void testForStyle_shortFullDateTime() throws Exception {
+//         DateTimeFormatter f = DateTimeFormat.forStyle("SF");
+//         DateTime dt = new DateTime(2004, 6, 9, 10, 20, 30, 0);
+//         String expect = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.FULL, UK).format(dt.toDate());
+//         assertEquals(expect, f.print(dt));
+//         expect = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.FULL, US).format(dt.toDate());
+//         assertEquals(expect, f.withLocale(US).print(dt));
+//         expect = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.FULL, FRANCE).format(dt.toDate());
+//         assertEquals(expect, f.withLocale(FRANCE).print(dt));
+//     }
 
     //-----------------------------------------------------------------------
     public void testForStyle_mediumShortDateTime() throws Exception {
@@ -345,26 +357,30 @@ public class TestDateTimeFormatStyle extends TestCase {
         assertEquals(expect, f.withLocale(FRANCE).print(dt));
     }
 
-    public void testForStyle_mediumLongDateTime() throws Exception {
-        DateTimeFormatter f = DateTimeFormat.forStyle("ML");
-        DateTime dt = new DateTime(2004, 6, 9, 10, 20, 30, 0);
-        String expect = DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.LONG, UK).format(dt.toDate());
-        assertEquals(expect, f.print(dt));
-        expect = DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.LONG, US).format(dt.toDate());
-        assertEquals(expect, f.withLocale(US).print(dt));
-        expect = DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.LONG, FRANCE).format(dt.toDate());
-        assertEquals(expect, f.withLocale(FRANCE).print(dt));
-    }
+    public void testForStyle_mediumLongDateTime() {}
+// Defects4J: flaky method
+//     public void testForStyle_mediumLongDateTime() throws Exception {
+//         DateTimeFormatter f = DateTimeFormat.forStyle("ML");
+//         DateTime dt = new DateTime(2004, 6, 9, 10, 20, 30, 0);
+//         String expect = DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.LONG, UK).format(dt.toDate());
+//         assertEquals(expect, f.print(dt));
+//         expect = DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.LONG, US).format(dt.toDate());
+//         assertEquals(expect, f.withLocale(US).print(dt));
+//         expect = DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.LONG, FRANCE).format(dt.toDate());
+//         assertEquals(expect, f.withLocale(FRANCE).print(dt));
+//     }
 
-    public void testForStyle_mediumFullDateTime() throws Exception {
-        DateTimeFormatter f = DateTimeFormat.forStyle("MF");
-        DateTime dt = new DateTime(2004, 6, 9, 10, 20, 30, 0);
-        String expect = DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.FULL, UK).format(dt.toDate());
-        assertEquals(expect, f.print(dt));
-        expect = DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.FULL, US).format(dt.toDate());
-        assertEquals(expect, f.withLocale(US).print(dt));
-        expect = DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.FULL, FRANCE).format(dt.toDate());
-        assertEquals(expect, f.withLocale(FRANCE).print(dt));
-    }
+    public void testForStyle_mediumFullDateTime() {}
+// Defects4J: flaky method
+//     public void testForStyle_mediumFullDateTime() throws Exception {
+//         DateTimeFormatter f = DateTimeFormat.forStyle("MF");
+//         DateTime dt = new DateTime(2004, 6, 9, 10, 20, 30, 0);
+//         String expect = DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.FULL, UK).format(dt.toDate());
+//         assertEquals(expect, f.print(dt));
+//         expect = DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.FULL, US).format(dt.toDate());
+//         assertEquals(expect, f.withLocale(US).print(dt));
+//         expect = DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.FULL, FRANCE).format(dt.toDate());
+//         assertEquals(expect, f.withLocale(FRANCE).print(dt));
+//     }
 
 }

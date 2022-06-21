@@ -75,7 +75,7 @@ public class StandardToStringStyleTest extends TestCase {
     @Override
     protected void tearDown() throws Exception {
         super.tearDown();
-        ToStringBuilder.setDefaultStyle(STYLE);
+        ToStringBuilder.setDefaultStyle(org.apache.commons.lang.builder.ToStringStyle.DEFAULT_STYLE);
     }
 
     //----------------------------------------------------------------

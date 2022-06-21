@@ -124,14 +124,6 @@
 
 
   <dependency>
-    <groupId>mockito</groupId>
-    <artifactId>mockito</artifactId>
-    <version>1.0</version>
-</dependency>
-
-
-
-    <dependency>
       <groupId>args4j</groupId>
       <artifactId>args4j</artifactId>
       <version>1.0.1</version>
@@ -147,7 +139,7 @@
       <groupId>com.google.protobuf</groupId>
       <artifactId>protobuf-java</artifactId>
       <version>2.4.1</version>
-    </dependency>
+    <scope>system</scope><systemPath>${project.basedir}/lib/protobuf-java.jar</systemPath></dependency>
 
     <dependency>
       <groupId>org.json</groupId>
@@ -190,7 +182,12 @@
 	
 	
 
-  </dependencies>
+  <dependency>
+          <groupId>org.mockito</groupId>
+          <artifactId>mockito-all</artifactId>
+          <version>1.10.19</version>
+        </dependency>
+        </dependencies>
   <build>
    <plugins>
 <plugin>

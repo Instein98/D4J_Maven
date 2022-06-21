@@ -158,7 +158,19 @@
     <commons.jira.pid>12310485</commons.jira.pid>
   </properties> 
 
-  <build>
+    <profiles>  
+    <profile>
+      <id>8</id>
+      <activation>
+        <jdk>1.8</jdk>
+      </activation>
+      <properties>
+        <commons.jacoco.version>0.8.4</commons.jacoco.version>
+      </properties>
+    </profile>
+  </profiles>
+
+<build>
     <sourceDirectory>src/java</sourceDirectory>
     <testSourceDirectory>src/test</testSourceDirectory>
       <testResources>

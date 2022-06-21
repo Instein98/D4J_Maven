@@ -490,41 +490,50 @@ public class VerificationInOrderWithCallsTest extends TestBase {
     }
 
     @Test
-    public void shouldFailToCreateCallsWithZeroArgument(){
-        // Given
-        InOrder verifier = inOrder( mockOne );
-        exceptionRule.expect( MockitoException.class );
-        exceptionRule.expectMessage( "Negative and zero values are not allowed here" );
-
-        // When
-        verifier.verify( mockOne, calls(0)).voidMethod();
-
-        // Then - expected exception thrown
-    }
-
-    @Test
-    public void shouldFailToCreateCallsWithNegativeArgument(){
-        // Given
-        InOrder verifier = inOrder( mockOne );
-        exceptionRule.expect( MockitoException.class );
-        exceptionRule.expectMessage( "Negative and zero values are not allowed here" );
-
-        // When
-        verifier.verify( mockOne, calls(-1)).voidMethod();
-
-        // Then - expected exception thrown
-    }
+    public void shouldFailToCreateCallsWithZeroArgument() {}
+// Defects4J: flaky method
+//     @Test
+//     public void shouldFailToCreateCallsWithZeroArgument(){
+//         // Given
+//         InOrder verifier = inOrder( mockOne );
+//         exceptionRule.expect( MockitoException.class );
+//         exceptionRule.expectMessage( "Negative and zero values are not allowed here" );
+// 
+//         // When
+//         verifier.verify( mockOne, calls(0)).voidMethod();
+// 
+//         // Then - expected exception thrown
+//     }
 
     @Test
-    public void shouldFailToCreateCallsForNonInOrderVerification(){
-        // Given
-        mockOne.voidMethod();
-        exceptionRule.expect( MockitoException.class );
-        exceptionRule.expectMessage( "calls is only intended to work with InOrder" );
+    public void shouldFailToCreateCallsWithNegativeArgument() {}
+// Defects4J: flaky method
+//     @Test
+//     public void shouldFailToCreateCallsWithNegativeArgument(){
+//         // Given
+//         InOrder verifier = inOrder( mockOne );
+//         exceptionRule.expect( MockitoException.class );
+//         exceptionRule.expectMessage( "Negative and zero values are not allowed here" );
+// 
+//         // When
+//         verifier.verify( mockOne, calls(-1)).voidMethod();
+// 
+//         // Then - expected exception thrown
+//     }
 
-        // When
-        verify( mockOne, calls(1)).voidMethod();
-
-        // Then - expected exception thrown
-    }
+    @Test
+    public void shouldFailToCreateCallsForNonInOrderVerification() {}
+// Defects4J: flaky method
+//     @Test
+//     public void shouldFailToCreateCallsForNonInOrderVerification(){
+//         // Given
+//         mockOne.voidMethod();
+//         exceptionRule.expect( MockitoException.class );
+//         exceptionRule.expectMessage( "calls is only intended to work with InOrder" );
+// 
+//         // When
+//         verify( mockOne, calls(1)).voidMethod();
+// 
+//         // Then - expected exception thrown
+//     }
 }

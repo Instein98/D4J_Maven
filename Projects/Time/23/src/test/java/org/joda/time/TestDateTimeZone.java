@@ -638,12 +638,14 @@ public class TestDateTimeZone extends TestCase {
         assertEquals("GMT", zone.getNameKey(TEST_TIME_WINTER));
     }
 
-    public void testGetShortName() {
-        DateTimeZone zone = DateTimeZone.forID("Europe/London");
-        assertEquals("BST", zone.getShortName(TEST_TIME_SUMMER));
-        assertEquals("GMT", zone.getShortName(TEST_TIME_WINTER));
-        assertEquals("BST", zone.getShortName(TEST_TIME_SUMMER, Locale.ENGLISH));
-    }
+    public void testGetShortName() {}
+// Defects4J: flaky method
+//     public void testGetShortName() {
+//         DateTimeZone zone = DateTimeZone.forID("Europe/London");
+//         assertEquals("BST", zone.getShortName(TEST_TIME_SUMMER));
+//         assertEquals("GMT", zone.getShortName(TEST_TIME_WINTER));
+//         assertEquals("BST", zone.getShortName(TEST_TIME_SUMMER, Locale.ENGLISH));
+//     }
             
     public void testGetShortNameProviderName() {
         assertEquals(null, DateTimeZone.getNameProvider().getShortName(null, "Europe/London", "BST"));
@@ -657,13 +659,15 @@ public class TestDateTimeZone extends TestCase {
         assertEquals("Europe/London", zone.getShortName(TEST_TIME_SUMMER, Locale.ENGLISH));
     }
     
-    public void testGetName() {
-        DateTimeZone zone = DateTimeZone.forID("Europe/London");
-        assertEquals("British Summer Time", zone.getName(TEST_TIME_SUMMER));
-        assertEquals("Greenwich Mean Time", zone.getName(TEST_TIME_WINTER));
-        assertEquals("British Summer Time", zone.getName(TEST_TIME_SUMMER, Locale.ENGLISH));
-        
-    }
+    public void testGetName() {}
+// Defects4J: flaky method
+//     public void testGetName() {
+//         DateTimeZone zone = DateTimeZone.forID("Europe/London");
+//         assertEquals("British Summer Time", zone.getName(TEST_TIME_SUMMER));
+//         assertEquals("Greenwich Mean Time", zone.getName(TEST_TIME_WINTER));
+//         assertEquals("British Summer Time", zone.getName(TEST_TIME_SUMMER, Locale.ENGLISH));
+//         
+//     }
     
     public void testGetNameProviderName() {
         assertEquals(null, DateTimeZone.getNameProvider().getName(null, "Europe/London", "BST"));

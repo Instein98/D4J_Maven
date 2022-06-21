@@ -244,18 +244,20 @@ public class TestDateTimeUtils extends TestCase {
     }
 
     //-----------------------------------------------------------------------
-    public void testOffsetMillisToZero() {
-        long now1 = 0L;
-        try {
-            // set time to one day ago
-            DateTimeUtils.setCurrentMillisOffset(0);
-            now1 = DateTimeUtils.currentTimeMillis();
-        } finally {
-            DateTimeUtils.setCurrentMillisSystem();
-        }
-        long now2 = DateTimeUtils.currentTimeMillis();
-        assertEquals(now1, now2);
-    }
+    public void testOffsetMillisToZero() {}
+// Defects4J: flaky method
+//     public void testOffsetMillisToZero() {
+//         long now1 = 0L;
+//         try {
+//             // set time to one day ago
+//             DateTimeUtils.setCurrentMillisOffset(0);
+//             now1 = DateTimeUtils.currentTimeMillis();
+//         } finally {
+//             DateTimeUtils.setCurrentMillisSystem();
+//         }
+//         long now2 = DateTimeUtils.currentTimeMillis();
+//         assertEquals(now1, now2);
+//     }
 
     //-----------------------------------------------------------------------
     public void testOffsetMillisSecurity() {

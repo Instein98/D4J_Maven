@@ -648,6 +648,16 @@
 
   <profiles>
     <profile>
+      <id>8</id>
+      <activation>
+        <jdk>1.8</jdk>
+      </activation>
+      <properties>
+        <maven.compile.source>1.8</maven.compile.source>
+        <maven.compile.target>1.8</maven.compile.target>
+      </properties>
+    </profile>
+    <profile>
       <id>setup-checkout</id>
       <activation>
         <file>

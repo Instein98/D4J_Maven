@@ -59,6 +59,8 @@
     <groupId>jarjar</groupId>
     <artifactId>jarjar</artifactId>
     <version>1.0-own</version>
+      <scope>system</scope>
+      <systemPath>${project.basedir}/lib/build/jarjar-1.0.jar</systemPath>
 </dependency>
     <dependency>
       <groupId>org.ow2.asm</groupId>
@@ -96,6 +98,37 @@
     <sourceDirectory>src</sourceDirectory>
 <testSourceDirectory>test</testSourceDirectory>
 <plugins>
+  <plugin>
+    <groupId>org.codehaus.mojo</groupId>
+    <artifactId>build-helper-maven-plugin</artifactId>
+    <version>3.2.0</version>
+    <executions>
+        <execution>
+        <id>add-source</id>
+        <phase>generate-sources</phase>
+        <goals>
+          <goal>add-source</goal>
+        </goals>
+        <configuration>
+          <sources>
+            <source>mockmaker/bytebuddy/main/java</source>
+          </sources>
+        </configuration>
+      </execution>
+      <execution>
+        <id>add-test-source</id>
+        <phase>generate-test-sources</phase>
+        <goals>
+          <goal>add-test-source</goal>
+        </goals>
+        <configuration>
+          <sources>
+            <source>mockmaker/bytebuddy/test/java</source>
+          </sources>
+        </configuration>
+      </execution>
+    </executions>
+  </plugin>
 
   <plugin>
   <groupId>org.mudebug</groupId>

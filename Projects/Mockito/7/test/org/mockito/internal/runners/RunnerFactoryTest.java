@@ -24,38 +24,44 @@ public class RunnerFactoryTest extends TestBase {
     }
 
     @Test
-    public void shouldCreateRunnerForJUnit44() throws Exception {
-        //given
-        RunnerProvider provider = new RunnerProvider() {
-            public boolean isJUnit45OrHigherAvailable() {
-                return false;
-            }
-        };
-        RunnerFactory factory = new RunnerFactory(provider);
-        
-        //when
-        RunnerImpl runner = factory.create(RunnerFactoryTest.class);
-        
-        //then
-        assertThat(runner, is(JUnit44RunnerImpl.class));
-    }
+    public void shouldCreateRunnerForJUnit44() {}
+// Defects4J: flaky method
+//     @Test
+//     public void shouldCreateRunnerForJUnit44() throws Exception {
+//         //given
+//         RunnerProvider provider = new RunnerProvider() {
+//             public boolean isJUnit45OrHigherAvailable() {
+//                 return false;
+//             }
+//         };
+//         RunnerFactory factory = new RunnerFactory(provider);
+//         
+//         //when
+//         RunnerImpl runner = factory.create(RunnerFactoryTest.class);
+//         
+//         //then
+//         assertThat(runner, is(JUnit44RunnerImpl.class));
+//     }
     
     @Test
-    public void shouldCreateRunnerForJUnit45()  throws Exception{
-        //given
-        RunnerProvider provider = new RunnerProvider() {
-            public boolean isJUnit45OrHigherAvailable() {
-                return true;
-            }
-        };
-        RunnerFactory factory = new RunnerFactory(provider);
-        
-        //when
-        RunnerImpl runner = factory.create(RunnerFactoryTest.class);
-        
-        //then
-        assertThat(runner, is(JUnit45AndHigherRunnerImpl.class));
-    }
+    public void shouldCreateRunnerForJUnit45() {}
+// Defects4J: flaky method
+//     @Test
+//     public void shouldCreateRunnerForJUnit45()  throws Exception{
+//         //given
+//         RunnerProvider provider = new RunnerProvider() {
+//             public boolean isJUnit45OrHigherAvailable() {
+//                 return true;
+//             }
+//         };
+//         RunnerFactory factory = new RunnerFactory(provider);
+//         
+//         //when
+//         RunnerImpl runner = factory.create(RunnerFactoryTest.class);
+//         
+//         //then
+//         assertThat(runner, is(JUnit45AndHigherRunnerImpl.class));
+//     }
     
     @Test
     public void

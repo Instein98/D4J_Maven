@@ -93,7 +93,6 @@ public abstract class DateTimeZone implements Serializable {
     /** The time zone for Universal Coordinated Time */
     public static final DateTimeZone UTC = new FixedDateTimeZone("UTC", "UTC", 0, 0);
     /** Maximum offset. */
-    private static final int MAX_MILLIS = (86400 * 1000) - 1;
 
     /** The instance that is providing time zones. */
     private static Provider cProvider;

@@ -44,31 +44,34 @@ public class ShouldNotDeadlockAnswerExecutionTest {
     }
 
     @Test
-    public void successIfEveryThreadHasItsOwnMock() throws Exception {
-        Service service1 = Mockito.mock(Service.class);
-        Service service2 = Mockito.mock(Service.class);
-        ExecutorService threads = Executors.newCachedThreadPool();
-        AtomicInteger counter = new AtomicInteger(2);
-
-        // registed answer on verySlowMethod
-
-        Mockito.when(service1.verySlowMethod()).thenAnswer(new LockingAnswer(counter));
-        Mockito.when(service2.verySlowMethod()).thenAnswer(new LockingAnswer(counter));
-
-        // execute verySlowMethod twice in separate threads
-
-        threads.execute(new ServiceRunner(service1));
-        threads.execute(new ServiceRunner(service2));
-
-        // waiting for threads to finish
-
-        threads.shutdown();
-
-        if (!threads.awaitTermination(500, TimeUnit.MILLISECONDS)) {
-            // threads were timed-out
-            Assert.fail();
-        }
-    }
+    public void successIfEveryThreadHasItsOwnMock() {}
+// Defects4J: flaky method
+//     @Test
+//     public void successIfEveryThreadHasItsOwnMock() throws Exception {
+//         Service service1 = Mockito.mock(Service.class);
+//         Service service2 = Mockito.mock(Service.class);
+//         ExecutorService threads = Executors.newCachedThreadPool();
+//         AtomicInteger counter = new AtomicInteger(2);
+// 
+//         // registed answer on verySlowMethod
+// 
+//         Mockito.when(service1.verySlowMethod()).thenAnswer(new LockingAnswer(counter));
+//         Mockito.when(service2.verySlowMethod()).thenAnswer(new LockingAnswer(counter));
+// 
+//         // execute verySlowMethod twice in separate threads
+// 
+//         threads.execute(new ServiceRunner(service1));
+//         threads.execute(new ServiceRunner(service2));
+// 
+//         // waiting for threads to finish
+// 
+//         threads.shutdown();
+// 
+//         if (!threads.awaitTermination(500, TimeUnit.MILLISECONDS)) {
+//             // threads were timed-out
+//             Assert.fail();
+//         }
+//     }
 
     static class LockingAnswer implements Answer<String> {
 

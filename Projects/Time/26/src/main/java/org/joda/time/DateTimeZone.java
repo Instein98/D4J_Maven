@@ -933,15 +933,6 @@ public abstract class DateTimeZone implements Serializable {
      * @throws IllegalArgumentException if the zone has no equivalent local time
      * @since 2.0
      */
-    public long convertLocalToUTC(long instantLocal, boolean strict, long originalInstantUTC) {
-        int offsetOriginal = getOffset(originalInstantUTC);
-        long instantUTC = instantLocal - offsetOriginal;
-        int offsetLocalFromOriginal = getOffset(instantUTC);
-        if (offsetLocalFromOriginal == offsetOriginal) {
-            return instantUTC;
-        }
-        return convertLocalToUTC(instantLocal, strict);
-    }
 
     /**
      * Converts a local instant to a standard UTC instant with the same
