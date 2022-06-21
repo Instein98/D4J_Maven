@@ -4,6 +4,8 @@ This script provides functions to fix the poms of maven versions of defects4j pr
 
 import os
 import re
+import shutil
+import subprocess as sp
 import xml.etree.ElementTree as et
 
 
@@ -149,6 +151,54 @@ def mockitoChangeFestDepVersion(projectPath: str, pomPath: str, outputPath: str)
     tree.write(outputPath, 'UTF-8')
     return True
 
+def changePomOutputDirAsSameAsD4j(projectPath: str, pomPath: str, outputPath: str):
 
-# if __name__ == '__main__':
-#     closureChangeMockitoDep('closure-107.pom.xml', 'closure-107.pom.xml.out')
+    tree, ns = parsePom(pomPath)
+    if not tree:
+        return False
+    root = tree.getroot()
+
+    classesTargetDirPath = sp.check_output("defects4j export -p dir.bin.classes 2> /dev/null", shell=True, cwd=projectPath, universal_newlines=True).strip()
+    testsTargetDirPath = sp.check_output("defects4j export -p dir.bin.tests 2> /dev/null", shell=True, cwd=projectPath, universal_newlines=True).strip()
+
+    build = root.find("./{}build".format(ns))
+    outputDir = build.find("./{}outputDirectory".format(ns))
+    testOutputDir = build.find("./{}testOutputDirectory".format(ns))
+    if outputDir is None:
+        outputDir = et.SubElement(build, 'outputDirectory')
+    if testOutputDir is None:
+        testOutputDir = et.SubElement(build, 'testOutputDirectory')
+    print('===== {} ====='.format(pomPath))
+    changed = False
+    if outputDir.text != classesTargetDirPath:
+        print('Changing outputDirectory from {} to {}'.format(outputDir.text, classesTargetDirPath))
+        outputDir.text = classesTargetDirPath
+        changed = True
+    if testOutputDir.text != testsTargetDirPath:
+        print('Changing testOutputDirectory from {} to {}'.format(testOutputDir.text, testsTargetDirPath))
+        testOutputDir.text = testsTargetDirPath
+        changed = True
+    if changed:
+        tree.write(outputPath, 'UTF-8')
+    return True
+
+if __name__ == '__main__':
+    # closureChangeMockitoDep('closure-107.pom.xml', 'closure-107.pom.xml.out')
+
+    # change the outputDir in poms for all projects
+    d4j_mvn_projects_dir_path = '/home/yicheng/apr/d4jMvn/Projects/'
+    for pid in os.listdir(d4j_mvn_projects_dir_path):
+        if not os.path.isdir('{}/{}'.format(d4j_mvn_projects_dir_path, pid)):
+            continue
+        # if pid != 'Mockito':
+        #     continue
+        for bid in os.listdir('{}/{}'.format(d4j_mvn_projects_dir_path, pid)):
+            if not os.path.isdir('{}/{}/{}'.format(d4j_mvn_projects_dir_path, pid, bid)):
+                continue
+            projectPath = '{}/{}/{}/'.format(d4j_mvn_projects_dir_path, pid, bid)
+            pomPath = '{}/{}/{}/pom.xml'.format(d4j_mvn_projects_dir_path, pid, bid)
+            if not os.path.isfile(pomPath + '.bak'):
+                shutil.copy(pomPath, pomPath + '.bak')
+            else:
+                shutil.copy(pomPath + '.bak', pomPath)
+            changePomOutputDirAsSameAsD4j(projectPath, pomPath, pomPath)

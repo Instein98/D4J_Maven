@@ -87,4 +87,4 @@ def main():
 
 if __name__ == '__main__':
     main()
-    sp.run("cd /home/yicheng/apr/UniaprD4jConsistency/1.2.0/testConsistency && bash checkConsistency.sh &> checkConsistency.log", shell=True, check=False)
+    # sp.run("cd /home/yicheng/apr/UniaprD4jConsistency/1.2.0/testConsistency && bash checkConsistency.sh &> checkConsistency.log", shell=True, check=False)

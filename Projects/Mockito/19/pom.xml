@@ -146,5 +146,5 @@
 
 
 
-  <outputDirectory>target/classes</outputDirectory><testOutputDirectory>target/test-classes</testOutputDirectory></build>
+  <outputDirectory>build/classes/main</outputDirectory><testOutputDirectory>build/classes/test</testOutputDirectory></build>
 </project>
